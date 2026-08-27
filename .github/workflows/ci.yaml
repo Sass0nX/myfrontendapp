@@ -1,0 +1,64 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  lint:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        working-directory: frontend-app
+        run: npm ci
+
+      - name: Run lint
+        working-directory: frontend-app
+        run: npm run lint
+
+
+  security:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        working-directory: frontend-app
+        run: npm ci
+
+      - name: Dependency security scan
+        working-directory: frontend-app
+        run: npm audit --audit-level=high
+
+      - name: Secret scan
+        run: gitleaks git . --redact
+
+
+  build:
+    needs:
+      - lint
+      - security
+
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        working-directory: frontend-app
+        run: npm ci
+
+      - name: Run build
+        working-directory: frontend-app
+        run: npm run build

@@ -75,6 +75,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        working-directory: frontend-app
+        run: npm ci
+
+      - name: Run build
+        working-directory: frontend-app
+        run: npm run build
+
       - name: Build Docker image
         working-directory: frontend-app
         run: docker build -t frontend-app:${{ github.sha }} .

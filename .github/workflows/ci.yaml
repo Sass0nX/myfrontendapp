@@ -90,7 +90,7 @@ jobs:
       - name: Login to Nexus Docker Registry
         shell: powershell
         env:
-          NEXUS_USERNAME: github-actions
+          NEXUS_USERNAME: develop
           NEXUS_PASSWORD: Q1w2e3r4
         run: |
           $env:NEXUS_PASSWORD | docker login 10.100.102.25:8081 `

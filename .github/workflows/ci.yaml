@@ -90,10 +90,10 @@ jobs:
       - name: Login to Nexus Docker Registry
         shell: powershell
         env:
-          NEXUS_USERNAME: develop
-          NEXUS_PASSWORD: Q1w2e3r4
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         run: |
-          $env:NEXUS_PASSWORD | docker login http://10.100.102.25:8081 `
+          $env:NEXUS_PASSWORD | docker login 10.100.102.25:8081 `
             --username $env:NEXUS_USERNAME `
             --password-stdin
 

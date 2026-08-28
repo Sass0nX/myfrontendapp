@@ -62,3 +62,32 @@ jobs:
       - name: Run build
         working-directory: frontend-app
         run: npm run build
+
+  docker:
+  needs:
+    - lint
+    - security
+    - build
+
+  runs-on: self-hosted
+
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build Docker image
+      working-directory: frontend-app
+      run: docker build -t frontend-app:${{ github.sha }} .
+
+    - name: Login to Nexus Docker Registry
+      shell: powershell
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_DOCKER_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_DOCKER_PASSWORD }}
+      run: |
+        $env:NEXUS_PASSWORD | docker login http://10.100.102.25:8081/repository/docker-hosted/ `
+          --username $env:NEXUS_USERNAME `
+          --password-stdin
+
+    - name: Push Docker image
+      run: docker push frontend-app:${{ github.sha }}

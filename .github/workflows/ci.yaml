@@ -93,7 +93,7 @@ jobs:
           NEXUS_USERNAME: develop
           NEXUS_PASSWORD: Q1w2e3r4
         run: |
-          $env:NEXUS_PASSWORD | docker login 10.100.102.25:8081 `
+          $env:NEXUS_PASSWORD | docker login http://10.100.102.25:8081 `
             --username $env:NEXUS_USERNAME `
             --password-stdin
 

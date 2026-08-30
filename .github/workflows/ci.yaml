@@ -87,6 +87,13 @@ jobs:
         working-directory: frontend-app
         run: docker build -t frontend-app:${{ github.sha }} .
 
+      - name: Check runner Docker environment
+        shell: powershell
+        run: |
+          whoami
+          docker context show
+          Get-Command docker.exe
+
       - name: Login to Nexus Docker Registry
         shell: powershell
         env:

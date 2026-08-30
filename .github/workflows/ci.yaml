@@ -93,7 +93,8 @@ jobs:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         run: |
-          $env:NEXUS_PASSWORD| docker login 10.100.102.25:8081 --username $env:NEXUS_USERNAME --password-stdin
+          curl.exe -v -u "${env:NEXUS_USERNAME}:${env:NEXUS_PASSWORD}" http://10.100.102.25:8081/v2/
+          docker login 10.100.102.25:8081 --username "$env:NEXUS_USERNAME" --password "$env:NEXUS_PASSWORD"
 
       - name: Push Docker image
         run: docker push 10.100.102.25:8081/docker-hosted/frontend-app:${{ github.sha }}

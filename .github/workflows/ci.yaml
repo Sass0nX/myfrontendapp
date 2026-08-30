@@ -93,8 +93,8 @@ jobs:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         run: |
-          $env:NEXUS_PASSWORD | docker login 10.100.102.25:8081 `
-            --username $env:NEXUS_USERNAME `
+          "Q1w2e3r4" | docker login 10.100.102.25:8081 `
+            --username github-actions `
             --password-stdin
 
       - name: Push Docker image

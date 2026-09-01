@@ -87,6 +87,12 @@ jobs:
         working-directory: frontend-app
         run: docker build -t frontend-app:${{ github.sha }} .
 
+      - name: Check AWS identity
+        shell: powershell
+        run: |
+          aws sts get-caller-identity
+          aws configure list
+
       - name: Login to ECR Docker Registry
         shell: powershell
         run: |

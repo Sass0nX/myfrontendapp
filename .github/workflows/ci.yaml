@@ -87,14 +87,14 @@ jobs:
         working-directory: frontend-app
         run: docker build -t frontend-app:${{ github.sha }} .
 
-      - name: Login to Nexus Docker Registry
+      - name: Login to ECR Docker Registry
         shell: powershell
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         run: |
-          curl.exe -v -u "${env:NEXUS_USERNAME}:${env:NEXUS_PASSWORD}" http://10.100.102.25:8081/v2/
-          docker login 10.100.102.25:8081 --username "$env:NEXUS_USERNAME" --password "$env:NEXUS_PASSWORD"
+          aws ecr get-login-password --region eu-central-1 |
+          docker login --username AWS --password-stdin 893089245803.dkr.ecr.eu-central-1.amazonaws.com
+
+      - name: Tag Docker image  
+        run: docker tag frontend-app:${{ github.sha }} 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images/frontend-app:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push 10.100.102.25:8081/docker-hosted/frontend-app:${{ github.sha }}
+        run: docker push 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images/frontend-app:${{ github.sha }}

@@ -97,7 +97,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Tag Docker image  
-        run: docker tag frontend-app:${{ github.sha }} 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images/frontend-app:${{ github.sha }}
+        run: docker tag frontend-app:${{ github.sha }} 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images/frontend-app:${{ github.sha }}
+        run: docker push 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images:${{ github.sha }}

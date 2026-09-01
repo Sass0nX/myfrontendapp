@@ -41,7 +41,7 @@ jobs:
         run: npm audit --audit-level=high --registry=https://registry.npmjs.org/
 
       - name: Secret scan
-        run: gitleaks git . --redact
+        run: gitleaks dir . --redact
 
 
   build:

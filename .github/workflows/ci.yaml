@@ -77,9 +77,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: frontend-app
-        run:
-          npm install
-          npm ci
+        run: npm ci
 
       - name: Run build
         working-directory: frontend-app

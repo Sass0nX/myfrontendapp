@@ -93,11 +93,11 @@ jobs:
           aws sts get-caller-identity
           aws configure list
 
-      - name: Login to ECR Docker Registry
+      - name: Login to ECR
         shell: powershell
         run: |
-          aws ecr get-login-password --region eu-central-1 |
-          docker login --username AWS --password-stdin 893089245803.dkr.ecr.eu-central-1.amazonaws.com
+          $password = aws ecr get-login-password --region eu-central-1
+          $password | docker login --username AWS --password-stdin 893089245803.dkr.ecr.eu-central-1.amazonaws.com
 
       - name: Tag Docker image  
         run: docker tag frontend-app:${{ github.sha }} 893089245803.dkr.ecr.eu-central-1.amazonaws.com/docker-images/frontend-app:${{ github.sha }}
